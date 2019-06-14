@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -51,7 +50,7 @@ public class LogEmitter implements JournalWapper{
             }
         }
 
-        if (!StringUtils.isEmpty(entity.getParameter())){
+        if (!entity.getParameter().equals("{}")){
             LOGGER.info("1 {} {} {} {} {} {} {} {}",
                     new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()),
                     "uri:" + entity.getUri(),
