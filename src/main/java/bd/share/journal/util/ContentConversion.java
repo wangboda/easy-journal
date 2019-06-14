@@ -1,6 +1,6 @@
-package bd.share.util;
+package bd.share.journal.util;
 
-import bd.share.exception.NotFormatException;
+import bd.share.journal.exception.NotFormatException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -38,7 +38,7 @@ public class ContentConversion {
                             return requestJson;
                     }
                 }catch (IOException e){
-                    throw new NotFormatException(contentType + ":" + content,e);
+                    throw new NotFormatException(contentType + ":" + content,e,null);
                 }
             }
         }else{

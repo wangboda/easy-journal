@@ -1,8 +1,8 @@
-package bd.share.util;
+package bd.share.journal.util;
 
-import bd.share.annotation.BindingModel;
-import bd.share.annotation.LogAnyway;
-import bd.share.annotation.LogIgnore;
+import bd.share.journal.annotation.BindingModel;
+import bd.share.journal.annotation.LogAnyway;
+import bd.share.journal.annotation.LogIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
@@ -61,22 +61,21 @@ public class DicHolder {
 
     // 给定jsonNode
     // 去除没有被logAnyway标注的参数
-    public void rinseNotLogAnyway(String uri,JsonNode requestJson){
+    public JsonNode rinseNotLogAnyway(String uri,JsonNode requestJson){
         List<String> logFields = logDic.get(uri);
-        if (logFields.size() != 0) {
-            //请求去除没有被 logAnyway 注释的属性
-            Iterator<Map.Entry<String, JsonNode>> it = requestJson.fields();
-            List<String> removeKey = new ArrayList<>();
-            while (it.hasNext()) {
-                Map.Entry<String, JsonNode> entry = it.next();
-                if(!logFields.contains(entry.getKey())){
-                    removeKey.add(entry.getKey());
-                }
-            }
-            for (String key : removeKey){
-                ((ObjectNode)requestJson).remove(key);
+        //请求去除没有被 logAnyway 注释的属性
+        Iterator<Map.Entry<String, JsonNode>> it = requestJson.fields();
+        List<String> removeKey = new ArrayList<>();
+        while (it.hasNext()) {
+            Map.Entry<String, JsonNode> entry = it.next();
+            if(!logFields.contains(entry.getKey())){
+                removeKey.add(entry.getKey());
             }
         }
+        for (String key : removeKey){
+            ((ObjectNode)requestJson).remove(key);
+        }
+        return requestJson;
     }
 
 

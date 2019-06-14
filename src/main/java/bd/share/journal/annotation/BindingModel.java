@@ -1,4 +1,4 @@
-package bd.share.annotation;
+package bd.share.journal.annotation;
 
 import java.lang.annotation.*;
 

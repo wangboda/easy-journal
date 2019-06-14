@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-bd.share.autoconfig.JournalAutoConfig
+bd.share.journal.autoconfig.JournalAutoConfig
