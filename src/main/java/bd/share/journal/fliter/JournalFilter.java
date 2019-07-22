@@ -32,11 +32,12 @@ public class JournalFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        ContentCachingResponseWrapper responseWrapper = null;
         if (isEnabled){
             long startTime = System.currentTimeMillis();
 
             ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(httpServletRequest);
-            ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(httpServletResponse);
+            responseWrapper = new ContentCachingResponseWrapper(httpServletResponse);
 
             try{
                 filterChain.doFilter(requestWrapper, responseWrapper);
@@ -46,6 +47,7 @@ public class JournalFilter extends OncePerRequestFilter {
             } finally {
                 log(startTime,requestWrapper,responseWrapper);
                 cause.remove();
+                responseWrapper.copyBodyToResponse();
             }
         }
     }
